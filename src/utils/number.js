@@ -11,5 +11,5 @@ export const formatNumber = (num) => {
 
 // 숫자만 입력
 export const onlyNumber = (text) => {
-  return text.replace(/[^0-9]/g, "");
+  return Number(text);
 };
