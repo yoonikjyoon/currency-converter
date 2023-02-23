@@ -6,11 +6,6 @@
   padding: 0;
 }
 :root {
-  /* Color */
-  --color-white: rgb(255, 255, 255);
-  --color-black: rgb(0, 0, 0);
-  --color-lavender: rgb(117, 119, 199);
-
   /* Font Size */
   --font-small: 0.8rem;
   --font-base: 1rem;
