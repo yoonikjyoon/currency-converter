@@ -6,5 +6,6 @@ export const colors = {
   paleGray02: "#f1f1f3",
   paleGray01: "#f9fafb",
   dark: "#24242c",
-  lavender: "#7577c7",
+  lavender: "#9ea3f5",
+  lightLavender: "#bbbefe",
 };
