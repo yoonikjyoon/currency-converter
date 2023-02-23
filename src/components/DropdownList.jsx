@@ -2,56 +2,57 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { colors } from "../constants/colors";
 import Icon from "./atoms/Icon";
+import { useQuery } from "@tanstack/react-query";
+import { useApiContext } from "../context/ApiContext";
 
-export default function DropdownList({
-  defaultLabel,
-  selectedValue,
-  list,
-  onClick,
-}) {
+export default function DropdownList({ queryKey, defaultLabel }) {
   const [isActive, setIsActive] = useState(false);
+  const { currency, value, setSymbol } = useApiContext();
+  const { data: symbols } = useQuery(["symbols"], () => currency.getSymbols());
 
-  const onSelected = (value, text) => {
-    onClick(value, text);
+  const onSelected = (code, description) => {
+    setSymbol(queryKey, code, description);
     setIsActive(false);
   };
   const handleActive = (active) => {
     setIsActive(active);
   };
   return (
-    <StyledDropdownContainer>
-      <StyledDropdownButton onClick={() => handleActive(!isActive)}>
-        {defaultLabel}
-        <Icon iconName={isActive ? "icon_fold" : "icon_unfold"} />
-      </StyledDropdownButton>
-      {isActive && (
-        <StyledModalView>
-          {list.map((item) => {
-            return (
-              <StyledSelect
-                key={item.code}
-                onClick={() => onSelected(item.code, item.description)}
-              >
-                <StyledSelectText
-                  style={{
-                    color:
-                      selectedValue === item.code
-                        ? colors.coolGray
-                        : colors.dark,
-                  }}
-                >
-                  {item.description}
-                  {/* {`${item.description}(${
+    <>
+      {symbols && (
+        <StyledDropdownContainer>
+          <StyledDropdownButton onClick={() => handleActive(!isActive)}>
+            {defaultLabel}
+            <Icon iconName={isActive ? "icon_fold" : "icon_unfold"} />
+          </StyledDropdownButton>
+          {isActive && (
+            <StyledModalView>
+              {symbols.map((item) => {
+                return (
+                  <StyledSelect
+                    key={item.code}
+                    selected={
+                      (queryKey === "from"
+                        ? value.from.code
+                        : value.to.code) === item.code
+                    }
+                    onClick={() => onSelected(item.code, item.description)}
+                  >
+                    <StyledSelectText>
+                      {item.description}
+                      {/* {`${item.description}(${
                     item.description.lastIndexOf(" ") > 0 &&
                     item.description.substr(item.description.lastIndexOf(" "))
                   })`} */}
-                </StyledSelectText>
-              </StyledSelect>
-            );
-          })}
-        </StyledModalView>
+                    </StyledSelectText>
+                  </StyledSelect>
+                );
+              })}
+            </StyledModalView>
+          )}
+        </StyledDropdownContainer>
       )}
-    </StyledDropdownContainer>
+    </>
   );
 }
 const StyledDropdownContainer = styled.div`
@@ -84,8 +85,9 @@ const StyledSelect = styled.div`
   display: flex;
   align-items: center;
   padding: 0px 8px;
+  background-color: ${(props) => (props.selected ? colors.paleGray03 : "")};
   :hover {
-    background-color: ${colors.paleGray01};
+    background-color: ${(props) => (!props.selected ? colors.paleGray01 : "")};
   }
 `;
 const StyledSelectText = styled.p`
