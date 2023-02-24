@@ -7,6 +7,7 @@
 }
 :root {
   /* Font Size */
+  --font-micro: 0.5rem;
   --font-small: 0.8rem;
   --font-base: 1rem;
   --font-large: 1.25rem;
@@ -28,12 +29,19 @@ code {
   display: none;
 }
 button,
-input,
-button:focus,
-input:focus {
+button:focus {
   border: none;
   cursor: pointer;
   outline: none;
   background-color: transparent;
   background-image: none;
+}
+input {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  background-image: none;
+}
+input:disabled {
+  color: inherit;
 }
