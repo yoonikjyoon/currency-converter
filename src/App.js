@@ -1,4 +1,4 @@
-import InputText from "./components/InputText";
+import Converter from "./components/pages/Converter";
 import styled from "styled-components";
 import { colors } from "./constants/colors";
 
@@ -6,7 +6,7 @@ function App() {
   return (
     <Container>
       <MainWrap>
-        <InputText />
+        <Converter />
       </MainWrap>
     </Container>
   );

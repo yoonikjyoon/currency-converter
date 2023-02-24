@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import DropdownList from "./DropdownList";
-import { onlyNumber } from "../utils/number";
-import { colors } from "../constants/colors";
-import { useApiContext } from "../context/ApiContext";
-import useDebounce from "../hooks/useDebounce";
+import { onlyNumber } from "../../utils/number";
+import { colors } from "../../constants/colors";
+import { useApiContext } from "../../context/ApiContext";
+import useDebounce from "../../hooks/useDebounce";
 
 export default function CurrencySelect({ queryKey }) {
   const { currency, value, setAmount } = useApiContext();
@@ -19,11 +19,7 @@ export default function CurrencySelect({ queryKey }) {
         .getCurrency(value.from.code, value.to.code, value.from.amount)
         .then((res) => setAmount("to", res.result));
     }
-    // if (queryKey === "to") {
-    //   currency
-    //     .getCurrency(value.to.code, value.from.code, value.to.amount)
-    //     .then((res) => setAmount("from", res.result));
-    // }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedNumber, value.from.code, value.to.code]);
 
   return (
@@ -36,12 +32,19 @@ export default function CurrencySelect({ queryKey }) {
             queryKey === "from" ? value.from.description : value.to.description
           }
         />
-        <StyledInput
-          type="text"
-          value={queryKey === "from" ? value.from.amount : value.to.amount || 0}
-          maxLength={15}
-          onChange={(e) => setAmount(queryKey, onlyNumber(e.target.value))}
-        />
+        <StyledInputWrap>
+          <StyledInput
+            type="text"
+            value={
+              queryKey === "from" ? value.from.amount : value.to.amount || 0
+            }
+            maxLength={15}
+            onChange={(e) => setAmount(queryKey, onlyNumber(e.target.value))}
+            autoFocus={queryKey === "from"}
+            disabled={queryKey === "to"}
+          />
+          <p>{queryKey === "from" ? value.from.code : value.to.code}</p>
+        </StyledInputWrap>
       </StyledSelectWrap>
     </div>
   );
@@ -52,8 +55,20 @@ const StyledSelectWrap = styled.div`
   border-radius: 5px;
   margin-top: 5px;
 `;
-const StyledInput = styled.input`
-  width: inherit;
+const StyledInputWrap = styled.div`
   height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: end;
   padding: 0px 10px;
+  font-size: var(--font-base);
+  & > p {
+    color: gray;
+  }
+`;
+const StyledInput = styled.input`
+  width: 100%;
+  text-align: end;
+  margin-right: 3px;
+  font-size: var(--font-base);
 `;

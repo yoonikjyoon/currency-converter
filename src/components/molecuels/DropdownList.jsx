@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { colors } from "../constants/colors";
-import Icon from "./atoms/Icon";
+import { colors } from "../../constants/colors";
+import Icon from "../atoms/Icon";
 import { useQuery } from "@tanstack/react-query";
-import { useApiContext } from "../context/ApiContext";
+import { useApiContext } from "../../context/ApiContext";
 
 export default function DropdownList({ queryKey, defaultLabel }) {
   const [isActive, setIsActive] = useState(false);
@@ -38,13 +38,7 @@ export default function DropdownList({ queryKey, defaultLabel }) {
                     }
                     onClick={() => onSelected(item.code, item.description)}
                   >
-                    <StyledSelectText>
-                      {item.description}
-                      {/* {`${item.description}(${
-                    item.description.lastIndexOf(" ") > 0 &&
-                    item.description.substr(item.description.lastIndexOf(" "))
-                  })`} */}
-                    </StyledSelectText>
+                    <StyledSelectText>{item.description}</StyledSelectText>
                   </StyledSelect>
                 );
               })}

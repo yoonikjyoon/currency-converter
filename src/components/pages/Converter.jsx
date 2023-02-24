@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import { colors } from "../constants/colors";
-import CurrencySelect from "./CurrencySelect";
+import { colors } from "../../constants/colors";
+import CurrencySelect from "../molecuels/CurrencySelect";
 
-export default function InputText() {
+export default function Converter() {
   return (
     <>
       <Container>
-        <StyledHeader> 환율 계산기 </StyledHeader>
+        <StyledHeader> Foreign Exchange Rate</StyledHeader>
         <CurrencySelect queryKey="from" />
         <CurrencySelect queryKey="to" />
       </Container>
@@ -18,7 +18,7 @@ export default function InputText() {
 const Container = styled.div`
   display: grid;
   grid-template-rows: 1fr 2fr 2fr;
-  grid-gap: 2rem;
+  grid-gap: 1.5rem;
 `;
 const StyledHeader = styled.div`
   border-bottom: 2px solid ${colors.lightLavender};
