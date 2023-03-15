@@ -1,5 +1,5 @@
 # Currency Converter
-This project is built with __React__ and __the Exchange rates API__.
+This project is a currency calculator made with __React__ and __the Exchange rates API__.
 
 Click to check out 👉 (https://yooni-converter.netlify.app/)
 
